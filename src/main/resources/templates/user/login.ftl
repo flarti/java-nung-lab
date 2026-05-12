@@ -5,9 +5,9 @@
         <div class="col-md-6 col-lg-5">
             <div class="card shadow-sm">
                 <div class="card-body p-4">
-                    <h1 class="h3 mb-3 text-center">Вхід</h1>
+                    <h1 class="h3 mb-3 text-center">Sign In to VDS Platform</h1>
                     <p class="text-muted text-center mb-4">
-                        Увійдіть за допомогою email і пароля або через Google.
+                        Sign in with your email and password or use Google account.
                     </p>
 
                     <div id="alertBox" class="alert alert-danger d-none" role="alert"></div>
@@ -133,9 +133,9 @@
                 const provider = new GoogleAuthProvider();
                 const credential = await signInWithPopup(auth, provider);
                 await sendTokenToBackend(credential.user);
-                window.location.href = window.appConfig.contextPath + "/user/profile";
+                window.location.href = window.appConfig.contextPath + "/dashboard";
             } catch (error) {
-                showError(error.message || "Не вдалося виконати вхід через Google.");
+                showError(error.message || "Google sign in failed.");
             }
         });
     </script>

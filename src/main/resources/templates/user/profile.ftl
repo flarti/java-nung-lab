@@ -82,7 +82,7 @@
 
                     <#if currentUserPhotoUrl?? && currentUserPhotoUrl?has_content>
                         <div class="mt-4">
-                            <div class="text-muted small mb-2">Фото профілю</div>
+                            <div class="text-muted small mb-2">Profile Photo</div>
                             <img src="${currentUserPhotoUrl}"
                                  alt="Profile photo"
                                  class="img-thumbnail"

@@ -1,4 +1,4 @@
-package ua.edu.nung.fit.orangestore.util;
+package ua.edu.nung.fit.vdsplatform.util;
 
 public class FirebaseAuthRequest {
 
@@ -12,3 +12,4 @@ public class FirebaseAuthRequest {
         this.idToken = idToken;
     }
 }
+

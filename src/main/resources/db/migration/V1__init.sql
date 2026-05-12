@@ -12,74 +12,90 @@ CREATE TABLE users (
        email_verified TINYINT(1) NOT NULL DEFAULT 0,
        last_login_at TIMESTAMP NULL DEFAULT NULL,
        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-       updated_at TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+       updated_at TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+
+       INDEX idx_users_email (email),
+       INDEX idx_users_role (role)
 );
 
+-- VDS Platform Tables
 
-CREATE TABLE fruits
-(
-    id          BIGINT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE servers (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
 
-    name        VARCHAR(150) NOT NULL,
-    description TEXT,
-    unit        ENUM('kg', 'piece', 'box', 'g') NOT NULL DEFAULT 'kg',
+    owner_id BIGINT NOT NULL,
 
-    active BOOLEAN NOT NULL DEFAULT TRUE,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    ip_address VARCHAR(45) UNIQUE,
 
-    created_at  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at  TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+    status VARCHAR(50) NOT NULL DEFAULT 'PROVISIONING',
+    os_type VARCHAR(50) NOT NULL,
 
-    INDEX       idx_fruits_active (active),
-    INDEX       idx_fruits_name (name)
-);
+    cpu_cores INT NOT NULL,
+    ram_gb INT NOT NULL,
+    storage_gb INT NOT NULL,
 
+    monthly_price DECIMAL(10, 2) NOT NULL,
 
-CREATE TABLE fruit_images
-(
-    id         BIGINT PRIMARY KEY AUTO_INCREMENT,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
 
-    fruit_id   BIGINT       NOT NULL,
-
-    file_name  VARCHAR(255) NOT NULL,
-    file_path  VARCHAR(500) NULL,
-
-    is_main    BOOLEAN      NOT NULL DEFAULT FALSE,
-    sort_order INT          NOT NULL DEFAULT 0,
-
-    alt_text   VARCHAR(255) NULL,
-
-    created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT fk_fruit_images_fruit
-        FOREIGN KEY (fruit_id)
-            REFERENCES fruits (id)
+    CONSTRAINT fk_servers_owner
+        FOREIGN KEY (owner_id)
+            REFERENCES users (id)
             ON DELETE CASCADE,
 
-    INDEX      idx_fruit_images_fruit (fruit_id),
-    INDEX      idx_fruit_images_main (fruit_id, is_main)
+    INDEX idx_servers_owner (owner_id),
+    INDEX idx_servers_status (status),
+    INDEX idx_servers_name (name)
 );
 
+CREATE TABLE deployments (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
 
-CREATE TABLE fruit_prices
-(
-    id         BIGINT PRIMARY KEY AUTO_INCREMENT,
+    server_id BIGINT NOT NULL,
 
-    fruit_id   BIGINT         NOT NULL,
+    application_name VARCHAR(255) NOT NULL,
+    version VARCHAR(100) NOT NULL,
+    port INT NOT NULL,
 
-    price      DECIMAL(10, 2) NOT NULL,
-    currency   VARCHAR(10)    NOT NULL DEFAULT 'UAH',
+    status VARCHAR(50) NOT NULL DEFAULT 'PENDING',
 
-    -- price validity window
-    valid_from TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    valid_to   TIMESTAMP NULL,
+    configuration LONGTEXT,
 
-    created_at TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    deployed_at TIMESTAMP NULL,
 
-    CONSTRAINT fk_fruit_prices_fruit
-        FOREIGN KEY (fruit_id)
-            REFERENCES fruits (id)
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_deployments_server
+        FOREIGN KEY (server_id)
+            REFERENCES servers (id)
             ON DELETE CASCADE,
 
-    INDEX      idx_fruit_prices_fruit (fruit_id),
-    INDEX      idx_fruit_prices_validity (fruit_id, valid_from, valid_to)
+    INDEX idx_deployments_server (server_id),
+    INDEX idx_deployments_status (status)
+);
+
+CREATE TABLE resource_usage (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+
+    server_id BIGINT NOT NULL,
+
+    cpu_percent DECIMAL(5, 2) NOT NULL,
+    ram_percent DECIMAL(5, 2) NOT NULL,
+    storage_percent DECIMAL(5, 2) NOT NULL,
+    bandwidth_gb DECIMAL(10, 2) NOT NULL,
+
+    timestamp TIMESTAMP NOT NULL,
+
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_resource_usage_server
+        FOREIGN KEY (server_id)
+            REFERENCES servers (id)
+            ON DELETE CASCADE,
+
+    INDEX idx_resource_usage_server (server_id),
+    INDEX idx_resource_usage_timestamp (server_id, timestamp)
 );

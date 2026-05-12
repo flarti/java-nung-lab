@@ -1,10 +1,10 @@
-# 🍊 OrangeStore – Навчальний веб-магазин
+# VDS Platform – Virtual Dedicated Server Platform
 
-![OrangeStore](img/OIP.jpg)
+![VDS Platform](img/OIP.jpg)
 
 ## 📌 Опис проекту
 
-**OrangeStore** – це навчальний веб-застосунок, який реалізує базовий функціонал інтернет-магазину.  
+**VDS Platform** – це навчальний веб-застосунок для управління віртуальними виділеними серверами.  
 Проєкт створений з метою вивчення:
 
 - Java (Servlet API)
@@ -23,7 +23,7 @@
 Проєкт побудований відповідно до стандартної структури Maven:
 
 ```
-orangestore
+vdsplatform
 │
 ├── pom.xml
 ├── img/ # Зображення для README та інтерфейсу
@@ -31,9 +31,10 @@ orangestore
 └── src
 └── main
 ├── java
-│ └── ua.nung.orangestore
-│ ├── ua.edu.nung.fit.orangestore.model/ # Сутності (Entity класи)
+│ └── ua.edu.nung.fit.vdsplatform
+│ ├── controller/ # Контролери (Servlets)
 │ ├── dao/ # Доступ до бази даних
+│ ├── model/ # Сутності (Entity класи)
 │ ├── service/ # Бізнес-логіка
 │ └── util/ # Допоміжні класи (HibernateUtil)
 │
@@ -56,9 +57,8 @@ orangestore
 - Java 17
 - Servlet API
 - Hibernate ORM
-- MySQL 8
+- PostgreSQL
 - Maven
-- JSP (за потреби)
 
 ---
 
@@ -76,7 +76,7 @@ orangestore
 ```properties
 # Database configuration
 db.driver=com.mysql.cj.jdbc.Driver
-db.url=jdbc:mysql://localhost:3306/orangestore?serverTimezone=UTC
+db.url=jdbc:mysql://localhost:3306/vds?serverTimezone=UTC
 db.user=root
 db.password=1122
 
@@ -98,7 +98,7 @@ project.properties.example
 Перед запуском необхідно створити базу даних:
 
 ```sql
-CREATE DATABASE orangestore;
+CREATE DATABASE vds;
 ```
 Перевірка чи працює MySQL сервер
 
@@ -180,7 +180,7 @@ mvn clean package
 Після успішної збірки файл буде створено за шляхом:
 
 ```
-target/orangestore.war
+target/vdsplatform.war
 ```
 
 ---
@@ -242,7 +242,7 @@ mvn clean package cargo:run
 Після запуску застосунок буде доступний за адресою:
 
 ```
-http://localhost:8080/orangestore
+http://localhost:8080/vdsplatform
 ```
 
 ---
@@ -256,7 +256,7 @@ Ctrl + C
 ```
 
 
-# Database Migrations (Flyway) – orangestore
+# Database Migrations (Flyway) – vdsplatform
 
 ## Overview
 
@@ -292,14 +292,14 @@ src/main/resources/
 # Database (Hibernate)
 # ==========================
 db.driver=com.mysql.cj.jdbc.Driver
-db.url=jdbc:mysql://localhost:3306/orangestore?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+db.url=jdbc:mysql://localhost:3306/vds?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
 db.user=ihorlt
 db.password=1122
 
 # ==========================
 # Flyway
 # ==========================
-flyway.url=jdbc:mysql://localhost:3306/orangestore?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+flyway.url=jdbc:mysql://localhost:3306/vds?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
 flyway.user=ihorlt
 flyway.password=1122
 
@@ -447,12 +447,9 @@ flyway_schema_history
 
 ```
 users
-fruits
-units
-fruit_prices
-fruit_images
-orders
-order_items
+servers
+deployments
+resource_usage
 ```
 
 Flyway manages schema evolution.

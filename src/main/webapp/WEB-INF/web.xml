@@ -3,5 +3,5 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Orange Web Store</display-name>
+  <display-name>VDS Platform - Virtual Dedicated Server Management</display-name>
 </web-app>

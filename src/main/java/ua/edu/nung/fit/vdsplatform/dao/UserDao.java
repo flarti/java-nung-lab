@@ -1,9 +1,9 @@
-package ua.edu.nung.fit.orangestore.dao;
+package ua.edu.nung.fit.vdsplatform.dao;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import ua.edu.nung.fit.orangestore.model.User;
-import ua.edu.nung.fit.orangestore.util.HibernateUtil;
+import ua.edu.nung.fit.vdsplatform.model.User;
+import ua.edu.nung.fit.vdsplatform.util.HibernateUtil;
 
 public class UserDao {
 
@@ -41,3 +41,4 @@ public class UserDao {
         }
     }
 }
+

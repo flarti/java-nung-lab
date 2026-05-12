@@ -1,4 +1,4 @@
-package ua.edu.nung.fit.orangestore.controller;
+package ua.edu.nung.fit.vdsplatform.controller;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -14,8 +14,13 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet("/hello")
-public class HelloServlet extends HttpServlet {
+@WebServlet(urlPatterns = {
+        "/dashboard",
+        "/dashboard/servers",
+        "/dashboard/deployments",
+        "/dashboard/resources"
+})
+public class DashboardServlet extends HttpServlet {
 
     private Configuration freemarkerConfig;
 
@@ -39,16 +44,30 @@ public class HelloServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String path = request.getServletPath();
         Map<String, Object> model = new HashMap<>();
-        model.put("title", "OrangeStore - Hello");
-        model.put("message", "Hello from OrangeStore 🍊");
-        model.put("description", "Tomcat + FreeMarker + Bootstrap are working correctly!");
 
-        renderTemplate(request, response, "hello.ftl", model);
+        if ("/dashboard/servers".equals(path)) {
+            model.put("title", "VDS Platform - My Servers");
+            renderTemplate(request, response, "vds/servers.ftl", model);
+
+        } else if ("/dashboard/deployments".equals(path)) {
+            model.put("title", "VDS Platform - Deployments");
+            renderTemplate(request, response, "vds/deployments-list.ftl", model);
+
+        } else if ("/dashboard/resources".equals(path)) {
+            model.put("title", "VDS Platform - Resources");
+            renderTemplate(request, response, "vds/resources-monitor.ftl", model);
+
+        } else {
+            model.put("title", "VDS Platform - Dashboard");
+            model.put("message", "Welcome to VDS Platform 🚀");
+            model.put("description", "Manage your virtual dedicated servers efficiently and securely.");
+            renderTemplate(request, response, "dashboard.ftl", model);
+        }
     }
 
     private void renderTemplate(HttpServletRequest request,

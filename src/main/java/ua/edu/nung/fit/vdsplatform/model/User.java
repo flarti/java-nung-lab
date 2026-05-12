@@ -1,4 +1,4 @@
-package ua.edu.nung.fit.orangestore.model;
+package ua.edu.nung.fit.vdsplatform.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -80,3 +80,4 @@ public class User {
     public Timestamp getLastLoginAt() { return lastLoginAt; }
     public void setLastLoginAt(Timestamp lastLoginAt) { this.lastLoginAt = lastLoginAt; }
 }
+

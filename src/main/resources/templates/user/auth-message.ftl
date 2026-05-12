@@ -7,20 +7,20 @@
                 <div class="card-body p-4 text-center">
                     <#if messageType!"info" == "success">
                         <div class="alert alert-success mb-4">
-                            ${message!"Операцію виконано успішно."}
+                            ${message!"Operation completed successfully."}
                         </div>
                     <#elseif messageType!"info" == "error">
                         <div class="alert alert-danger mb-4">
-                            ${message!"Сталася помилка."}
+                            ${message!"An error occurred."}
                         </div>
                     <#else>
                         <div class="alert alert-info mb-4">
-                            ${message!"Інформаційне повідомлення."}
+                            ${message!"Information message."}
                         </div>
                     </#if>
 
-                    <a href="${redirectUrl!contextPath + '/hello'}" class="btn btn-dark">
-                        ${redirectLabel!"Продовжити"}
+                    <a href="${redirectUrl!contextPath + '/dashboard'}" class="btn btn-primary">
+                        ${redirectLabel!"Continue"}
                     </a>
                 </div>
             </div>

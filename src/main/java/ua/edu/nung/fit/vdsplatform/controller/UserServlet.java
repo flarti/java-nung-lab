@@ -1,4 +1,4 @@
-package ua.edu.nung.fit.orangestore.controller;
+package ua.edu.nung.fit.vdsplatform.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import freemarker.template.Configuration;
@@ -10,9 +10,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import ua.edu.nung.fit.orangestore.model.User;
-import ua.edu.nung.fit.orangestore.service.FirebaseUserService;
-import ua.edu.nung.fit.orangestore.util.FirebaseAuthRequest;
+import ua.edu.nung.fit.vdsplatform.model.User;
+import ua.edu.nung.fit.vdsplatform.service.FirebaseUserService;
+import ua.edu.nung.fit.vdsplatform.util.FirebaseAuthRequest;
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -98,21 +98,21 @@ public class UserServlet extends HttpServlet {
     private void renderLoginPage(HttpServletRequest req, HttpServletResponse resp)
             throws IOException, ServletException {
         Map<String, Object> model = new HashMap<>();
-        model.put("title", "Вхід");
+        model.put("title", "VDS Platform - Login");
         renderTemplate(req, resp, "user/login.ftl", model);
     }
 
     private void renderRegisterPage(HttpServletRequest req, HttpServletResponse resp)
             throws IOException, ServletException {
         Map<String, Object> model = new HashMap<>();
-        model.put("title", "Реєстрація");
+        model.put("title", "VDS Platform - Register");
         renderTemplate(req, resp, "user/register.ftl", model);
     }
 
     private void renderForgotPasswordPage(HttpServletRequest req, HttpServletResponse resp)
             throws IOException, ServletException {
         Map<String, Object> model = new HashMap<>();
-        model.put("title", "Відновлення пароля");
+        model.put("title", "VDS Platform - Reset Password");
         renderTemplate(req, resp, "user/forgot-password.ftl", model);
     }
 
@@ -126,7 +126,7 @@ public class UserServlet extends HttpServlet {
         }
 
         Map<String, Object> model = new HashMap<>();
-        model.put("title", "Профіль");
+        model.put("title", "VDS Platform - Profile");
 
         renderTemplate(req, resp, "user/profile.ftl", model);
     }
@@ -241,3 +241,4 @@ public class UserServlet extends HttpServlet {
         objectMapper.writeValue(resp.getWriter(), body);
     }
 }
+

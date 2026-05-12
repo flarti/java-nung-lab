@@ -1,4 +1,4 @@
-package ua.edu.nung.fit.orangestore.util;
+package ua.edu.nung.fit.vdsplatform.util;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
@@ -87,3 +87,4 @@ public final class FirebaseConfig {
         }
     }
 }
+

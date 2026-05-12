@@ -1,10 +1,10 @@
-package ua.edu.nung.fit.orangestore.service;
+package ua.edu.nung.fit.vdsplatform.service;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
-import ua.edu.nung.fit.orangestore.dao.UserDao;
-import ua.edu.nung.fit.orangestore.model.User;
-import ua.edu.nung.fit.orangestore.util.FirebaseConfig;
+import ua.edu.nung.fit.vdsplatform.dao.UserDao;
+import ua.edu.nung.fit.vdsplatform.model.User;
+import ua.edu.nung.fit.vdsplatform.util.FirebaseConfig;
 
 import java.sql.Timestamp;
 import java.util.Map;
@@ -74,3 +74,4 @@ public class FirebaseUserService {
         user.setLastName(parts.length > 1 ? parts[1] : null);
     }
 }
+

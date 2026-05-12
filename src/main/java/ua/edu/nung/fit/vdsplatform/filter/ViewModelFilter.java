@@ -1,4 +1,4 @@
-package ua.edu.nung.fit.orangestore.filter;
+package ua.edu.nung.fit.vdsplatform.filter;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -8,7 +8,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import ua.edu.nung.fit.orangestore.util.FirebaseConfig;
+import ua.edu.nung.fit.vdsplatform.util.FirebaseConfig;
 
 import java.io.IOException;
 import java.util.Map;
@@ -22,16 +22,13 @@ public class ViewModelFilter implements Filter {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
 
-        // contextPath
         request.setAttribute("contextPath", httpRequest.getContextPath());
 
-        // 🔥 Firebase Web Config (через один централізований метод)
         Map<String, Object> firebaseAttrs = FirebaseConfig.getFirebaseWebConfig();
         for (Map.Entry<String, Object> entry : firebaseAttrs.entrySet()) {
             request.setAttribute(entry.getKey(), entry.getValue());
         }
 
-        // 🔐 Session / Auth data
         HttpSession session = httpRequest.getSession(false);
 
         if (session != null && session.getAttribute("userId") != null) {
@@ -56,3 +53,4 @@ public class ViewModelFilter implements Filter {
         chain.doFilter(request, response);
     }
 }
+

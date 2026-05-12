@@ -71,9 +71,9 @@
 
             try {
                 await sendPasswordResetEmail(auth, email);
-                showSuccess("Лист для скидання пароля успішно надіслано.");
+                showSuccess("Password reset email sent successfully. Please check your inbox.");
             } catch (error) {
-                showError(error.message || "Не вдалося надіслати лист для скидання пароля.");
+                showError(error.message || "Failed to send password reset email.");
             }
         });
     </script>

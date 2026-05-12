@@ -68,12 +68,27 @@
             createUserWithEmailAndPassword
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        const app = initializeApp(window.appConfig.firebaseConfig);
+        // Ініціалізуємо Firebase, читаючи змінні напряму з FreeMarker
+        const firebaseConfig = {
+            apiKey: "${firebaseWebApiKey!''}",
+            authDomain: "${firebaseWebAuthDomain!''}",
+            projectId: "${firebaseWebProjectId!''}",
+            storageBucket: "${firebaseWebStorageBucket!''}",
+            messagingSenderId: "${firebaseWebMessagingSenderId!''}",
+            appId: "${firebaseWebAppId!''}",
+            measurementId: "${firebaseWebMeasurementId!''}"
+        };
+
+        // Логування для перевірки (можна видалити після успішного запуску)
+        console.log("Ініціалізація Firebase з ключем:", firebaseConfig.apiKey ? "Ключ присутній" : "Ключ ВІДСУТНІЙ");
+
+        const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
         const alertBox = document.getElementById("alertBox");
         const successBox = document.getElementById("successBox");
         const registerForm = document.getElementById("registerForm");
+        const contextPath = "${contextPath!''}";
 
         function showError(message) {
             alertBox.textContent = message;
@@ -90,7 +105,7 @@
         async function sendTokenToBackend(user) {
             const idToken = await user.getIdToken();
 
-            const response = await fetch(window.appConfig.contextPath + "/auth/session", {
+            const response = await fetch(contextPath + "/auth/session", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -132,14 +147,15 @@
                 const credential = await createUserWithEmailAndPassword(auth, email, password);
                 await sendTokenToBackend(credential.user);
 
-                showSuccess("Реєстрація успішна. Зараз буде виконано перенаправлення.");
+                showSuccess("Реєстрація успішна. Перенаправлення...");
 
                 setTimeout(() => {
-                    window.location.href = window.appConfig.contextPath + "/user/profile";
+                    window.location.href = contextPath + "/dashboard";
                 }, 1000);
 
             } catch (error) {
-                showError(error.message || "Не вдалося виконати реєстрацію.");
+                console.error(error);
+                showError(error.message || "Помилка реєстрації.");
             }
         });
     </script>

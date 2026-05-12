@@ -1,7 +1,11 @@
-package ua.edu.nung.fit.orangestore.util;
+package ua.edu.nung.fit.vdsplatform.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import ua.edu.nung.fit.vdsplatform.model.User;
+import ua.edu.nung.fit.vdsplatform.model.Server;
+import ua.edu.nung.fit.vdsplatform.model.Deployment;
+import ua.edu.nung.fit.vdsplatform.model.ResourceUsage;
 
 import java.io.InputStream;
 import java.util.Properties;
@@ -28,7 +32,11 @@ public class HibernateUtil {
             Configuration configuration = new Configuration();
             configuration.configure("hibernate.cfg.xml");
 
-            configuration.addAnnotatedClass(ua.edu.nung.fit.orangestore.model.User.class);
+            configuration.addAnnotatedClass(User.class);
+
+            configuration.addAnnotatedClass(Server.class);
+            configuration.addAnnotatedClass(Deployment.class);
+            configuration.addAnnotatedClass(ResourceUsage.class);
 
             configuration.setProperty("hibernate.connection.driver_class", properties.getProperty("db.driver"));
             configuration.setProperty("hibernate.connection.url", properties.getProperty("db.url"));
@@ -50,3 +58,4 @@ public class HibernateUtil {
         return sessionFactory;
     }
 }
+
